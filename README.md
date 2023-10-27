@@ -20,3 +20,12 @@ like
 **Command to remove SingleFile WSL**  
 
 ```irm https://raw.githubusercontent.com/go2tom42/SingleFile-for-WSL2/master/Remove-SingleFile-for-WSL2.ps1 | iex```
+
+
+&nbsp;  
+
+&nbsp;  
+
+&nbsp;  
+
+fyi:  I did this on Windowws 10 using Powershell 7
