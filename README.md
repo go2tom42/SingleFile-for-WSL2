@@ -4,7 +4,7 @@ Create and install SingleFIle as a WSL appliance from alpine rootfs
 https://github.com/gildas-lormeau/SingleFile  
 https://github.com/gildas-lormeau/single-file-cli
 
-**Command to install**  
+**Command to install** InPowershell as admin  
 ```irm https://raw.githubusercontent.com/go2tom42/SingleFile-for-WSL2/master/SingleFile-for-WSL2.ps1 | iex```  
 
 **Command to get HTML**  
