@@ -10,7 +10,7 @@ https://github.com/gildas-lormeau/single-file-cli
 
 **Command to get HTML**  
 
-```$wslPath = "$env:windir\system32\wsl.exe"; &$wslPath -d tom42-SingleFile -u chrome -e sh -c "/usr/src/app/SingleFile.sh https://typetype.org/fonts/tt-ricks/"```  
+```$wslPath = "$env:windir\system32\wsl.exe"; &$wslPath -d tom42-SingleFile -u chrome -e sh -c "/SingleFile.sh https://typetype.org/fonts/tt-ricks/"```  
 
 **Output file location**  
 ```LOCALAPPDATA\tom42-SingleFile```  
