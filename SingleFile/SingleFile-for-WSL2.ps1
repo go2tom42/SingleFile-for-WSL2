@@ -31,6 +31,39 @@ Start-Process -path $gzip -ArgumentList "-dv rootfs.tar.gz" -NoNewWindow -Wait
 &$tar -rf rootfs.tar ./usr/bin/neofetch --group=0 --owner=0 --mode='0755'
 remove-item -Recurse -Path './usr'
 mkdir usr\src\app
+$localconf = @'
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+
+ <alias>
+   <family>sans-serif</family>
+   <prefer>
+     <family>Main sans-serif font name goes here</family>
+     <family>Noto Color Emoji</family>
+     <family>Noto Emoji</family>
+   </prefer>
+ </alias>
+
+ <alias>
+   <family>serif</family>
+   <prefer>
+     <family>Main serif font name goes here</family>
+     <family>Noto Color Emoji</family>
+     <family>Noto Emoji</family>
+   </prefer>
+ </alias>
+
+ <alias>
+  <family>monospace</family>
+  <prefer>
+    <family>Main monospace font name goes here</family>
+    <family>Noto Color Emoji</family>
+    <family>Noto Emoji</family>
+   </prefer>
+ </alias>
+</fontconfig>
+'@
 
 $text = @'
 #!/bin/sh
@@ -39,7 +72,7 @@ cd /usr/src/app/node_modules/single-file-cli
 CHROME_BIN=/usr/bin/chromium-browser
 CHROME_PATH=/usr/lib/chromium/
 CHROMIUM_FLAGS="--disable-software-rasterizer --disable-dev-shm-usage"
-./single-file $1 --insert-meta-csp=false --remove-alternative-fonts=false --remove-alternative-medias=false --remove-hidden-elements=false --remove-unused-fonts=false --remove-unused-styles=false --compress-HTML=false --browser-executable-path=/usr/bin/chromium-browser --output-directory=/mnt/c/Users/tom42/AppData/Local/tom42-SingleFile
+./single-file $1 --browser-wait-until=load --insert-meta-csp=false --remove-alternative-fonts=false --remove-alternative-medias=false --remove-hidden-elements=false --remove-unused-fonts=false --remove-unused-styles=false --compress-HTML=false --browser-executable-path=/usr/bin/chromium-browser --output-directory=/mnt/c/Users/tom42/AppData/Local/tom42-SingleFile
 '@
 
 $text | out-file -Encoding utf8 usr\src\app\SingleFile.sh
@@ -97,7 +130,12 @@ remove-item -Recurse -Path './etc'
 &$wslPath -d $DistributionName apk add --no-cache chromium-swiftshader ttf-freefont font-noto-emoji 
 &$wslPath -d $DistributionName apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing font-wqy-zenhei
 &$wslPath -d $DistributionName apk add --no-cache tini make gcc g++ python3 git nodejs npm yarn
-&$wslPath -d $DistributionName cp /mnt/c/Users/tom42/Downloads/local.conf /etc/fonts/local.conf
+&$wslPath -d $DistributionName ln /usr/src/app/SingleFile.sh /SingleFile.sh
+$localconf | out-file -Encoding utf8 .\local.conf
+((Get-Content ".\local.conf") -join "`n") + "`n" | Set-Content -NoNewline ".\local.conf"
+&$wslPath -d $DistributionName cp ./local.conf /etc/fonts/local.conf
+remove-item -Recurse -Path './local.conf'
+
 &$wslPath -d $DistributionName mkdir -p /usr/src/app 
 &$wslPath -d $DistributionName adduser -D chrome 
 &$wslPath -d $DistributionName chown -R chrome:chrome /usr/src/app
