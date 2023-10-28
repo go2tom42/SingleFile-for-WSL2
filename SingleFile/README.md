@@ -6,7 +6,7 @@ https://github.com/gildas-lormeau/SingleFile
 https://github.com/gildas-lormeau/single-file-cli
 
 **Command to install** (In Powershell as admin)  
-```irm https://raw.githubusercontent.com/go2tom42/SingleFile-for-WSL2/master/SingleFile-for-WSL2.ps1 | iex```  
+```irm https://raw.githubusercontent.com/Stuff-for-WSL2/master/SingleFile/SingleFile-for-WSL2.ps1 | iex```  
 
 **Command to get HTML**  
 
@@ -20,7 +20,7 @@ like
 
 **Command to remove SingleFile WSL**  
 
-```irm https://raw.githubusercontent.com/go2tom42/SingleFile-for-WSL2/master/Remove-SingleFile-for-WSL2.ps1 | iex```
+```irm https://raw.githubusercontent.com/go2tom42/Stuff-for-WSL2/master/SingleFile//Remove-SingleFile-for-WSL2.ps1 | iex```
 
 
 &nbsp;  
