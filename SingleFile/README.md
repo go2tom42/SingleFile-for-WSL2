@@ -20,9 +20,8 @@ like
 
 **Command to remove SingleFile WSL**  
 
-```irm https://raw.githubusercontent.com/go2tom42/Stuff-for-WSL2/master/SingleFile//Remove-SingleFile-for-WSL2.ps1 | iex```
 
-
+```irm https://raw.githubusercontent.com/go2tom42/Stuff-for-WSL2/master/SingleFile/Remove-SingleFile-for-WSL2.ps1 | iex```
 &nbsp;  
 
 &nbsp;  
