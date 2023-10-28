@@ -1,4 +1,5 @@
 # SingleFile-for-WSL2  
+![](SingleFile.png?raw=true)
 Create and install SingleFIle as a WSL appliance from alpine rootfs  
 
 https://github.com/gildas-lormeau/SingleFile  
