@@ -2,8 +2,8 @@
 ![](OpenAPITools.png?raw=true)
 Create and install OpenAPITools as a WSL appliance from OpenAPITools Docker image (REQUIRED [Docker Desktop](https://www.docker.com/products/docker-desktop/))
 
-https://github.com/OpenAPITools/openapi-generator 
-https://hub.docker.com/r/openapitools/openapi-generator-cli
+https://github.com/OpenAPITools/openapi-generator  
+https://hub.docker.com/r/openapitools/openapi-generator-cli  
 
 **Command to install** (In Powershell as admin)  
 ```irm https://raw.githubusercontent.com/go2tom42/Stuff-for-WSL2/master/OpenAPITools/OpenAPITools-for-WSL2.ps1 | iex```  
