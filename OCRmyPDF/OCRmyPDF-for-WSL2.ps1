@@ -1,10 +1,8 @@
+#Variables
 
-
-$gzip                         = 'c:\tools\cygwin\bin\gzip.exe'
-$tar                          = 'c:\tools\cygwin\bin\tar.exe'
-$curl                         = 'C:\Windows\System32\curl.exe'
-
-
+[string]$gzip                 = 'c:\tools\cygwin\bin\gzip.exe'
+[string]$tar                  = 'c:\tools\cygwin\bin\tar.exe'
+[string]$curl                 = 'C:\Windows\System32\curl.exe'
 
 [string]$distro               = "OCRmyPDF"
 [string]$dockerpath           = "jbarlow83/ocrmypdf-alpine"
@@ -48,6 +46,7 @@ export PS1=`"\[\033[01;32m\]$DistributionName\[\033[00m\]:\[\033[01;34m\]\w\[\03
 
 #don't touch below unless you know what you are doing
 
+#get WSL.exe path
 if ($IsWindows) {
     $wslPath = "$env:windir\system32\wsl.exe"
     if (-not [System.Environment]::Is64BitProcess) {
