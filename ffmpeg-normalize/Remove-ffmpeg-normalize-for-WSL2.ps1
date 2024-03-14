@@ -12,7 +12,7 @@ function remove-it {
         $wslPath = "wsl.exe"
      }
      [string]$BaseDirectory = $env:LOCALAPPDATA
-     [string]$DistributionName = "tom42-OCRmyPDF"
+     [string]$DistributionName = "tom42-ffmpeg_normalize"
      $distribution_dir = "$BaseDirectory\$DistributionName"
     
      &$wslPath --unregister $DistributionName
