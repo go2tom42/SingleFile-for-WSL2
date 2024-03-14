@@ -1,12 +1,13 @@
+
 #Variables
 
 [string]$gzip                 = 'c:\tools\cygwin\bin\gzip.exe'
 [string]$tar                  = 'c:\tools\cygwin\bin\tar.exe'
 [string]$curl                 = 'C:\Windows\System32\curl.exe'
 
-[string]$distro               = "OCRmyPDF"
-[string]$dockerpath           = "jbarlow83/ocrmypdf-alpine"
-[string]$DistributionName     = "tom42-OCRmyPDF"
+[string]$distro               = "ffmpeg-normalize"
+[string]$dockerpath           = "python:3.12.0a7-alpine3.17"
+[string]$DistributionName     = "tom42-ffmpeg_normalize"
 [string]$neofetchPath         = "./usr/bin/neofetch"
 [string]$neofetchDELPath      = "./usr"
 
@@ -18,25 +19,19 @@
 [string]$prompPathDel         = "./etc"
 
 $neofetchtext = @'
-                                                     ${c4}@@@@@@@@@@@@@@@@@@@@      
-                                                     ${c4}@                  @@@    
-                                                     ${c4}@                  @@@@   
-                                                     ${c4}@                  @@@@@  
-                                                     ${c4}@                  @@@@@@ 
-                                                     ${c4}@                        @
-                                                ${c3}@@@@@@@@@@@@@@@@@@@@@@@@@@@   ${c4}@
-${c1} @@@@@@@    @@@@@@ @@@@@@@                      ${c3}@@       @       @@      @@   ${c4}@
-${c1}@@     @@  @@      @@    @@   ${c2}@@@@@ @@@  @@  @@ ${c3}@@  @@@  @  @@@@  @  @@@@@@   ${c4}@
-${c1}@@     @@  @@      @@@@@@@    ${c2}@   @@  @@ @@  @  ${c3}@@      @@  @@@@  @     @@@   ${c4}@
-${c1}@@     @@  @@      @@   @@    ${c2}@   @@  @@  @@@@  ${c3}@@  @@@@@@  @@@@  @  @@@@@@   ${c4}@
-${c1} @@@@@@@    @@@@@@ @@    @@   ${c2}@   @@  @@   @@   ${c3}@@  @@@@@@       @@  @@@@@@   ${c4}@
-                              ${c2}            @@    ${c3}@@@@@@@@@@@@@@@@@@@@@@@@@@@   ${c4}@
-                              ${c2}           @@          ${c4}@                        @
-                                                     ${c4}@                        @
-                                                     ${c4}@                        @
-                                                     ${c4}@                        @
-                                                     ${c4}@                        @
-                                                     ${c4}@@@@@@@@@@@@@@@@@@@@@@@@@@
+███████╗███████╗███╗   ███╗██████╗ ███████╗ ██████╗          
+██╔════╝██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝          
+█████╗  █████╗  ██╔████╔██║██████╔╝█████╗  ██║  ███╗         
+██╔══╝  ██╔══╝  ██║╚██╔╝██║██╔═══╝ ██╔══╝  ██║   ██║         
+██║     ██║     ██║ ╚═╝ ██║██║     ███████╗╚██████╔╝         
+╚═╝     ╚═╝     ╚═╝     ╚═╝╚═╝     ╚══════╝ ╚═════╝          
+                                                             
+███╗   ██╗ ██████╗ ██████╗ ███╗   ███╗ █████╗ ██╗     ██╗███████╗███████╗
+████╗  ██║██╔═══██╗██╔══██╗████╗ ████║██╔══██╗██║     ██║╚══███╔╝██╔════╝
+██╔██╗ ██║██║   ██║██████╔╝██╔████╔██║███████║██║     ██║  ███╔╝ █████╗  
+██║╚██╗██║██║   ██║██╔══██╗██║╚██╔╝██║██╔══██║██║     ██║ ███╔╝  ██╔══╝  
+██║ ╚████║╚██████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║███████╗██║███████╗███████╗
+╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚══════╝
 '@
 
 $prompttext = @"
@@ -67,6 +62,18 @@ Start-Process -FilePath "docker" -ArgumentList "run --name $distro -t $dockerpat
 Start-Process -FilePath "docker" -ArgumentList "export $distro -o .\$distro.tar" -wait -NoNewWindow
 Start-Process -FilePath "docker" -ArgumentList "rm $distro" -wait -NoNewWindow
 Start-Process -FilePath "docker" -ArgumentList "rmi $distro" -wait -NoNewWindow
+
+#add ffmpeg & ffprobe
+$env:Path = "$($gzip.replace('\gzip.exe',''));" + $env:Path
+&$curl -o ffmpeg-release-amd64-static.tar.xz https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+$folder = ((&$tar --list --file=ffmpeg-release-amd64-static.tar.xz) -split '\n')[0].replace('/','')
+Start-Process -FilePath $tar -ArgumentList "--extract --file=ffmpeg-release-amd64-static.tar.xz $folder/ffmpeg --strip-components=1" -wait -NoNewWindow
+Start-Process -FilePath $tar -ArgumentList "--extract --file=ffmpeg-release-amd64-static.tar.xz $folder/ffprobe --strip-components=1" -wait -NoNewWindow
+Start-Process -FilePath $tar -ArgumentList "rf ffmpeg-normalize.tar --transform 's,^\./,/usr/local/bin/,' ./ffmpeg --group=0 --owner=0 --mode='0755'" -wait -NoNewWindow
+Start-Process -FilePath $tar -ArgumentList "rf ffmpeg-normalize.tar --transform 's,^\./,/usr/local/bin/,' ./ffprobe --group=0 --owner=0 --mode='0755'" -wait -NoNewWindow
+Remove-Item -Path "./ffmpeg-release-amd64-static.tar.xz" -Force
+Remove-Item -Path "./ffmpeg" -Force
+Remove-Item -Path "./ffprobe" -Force
 
 #move distro to final folder
 [string]$BaseDirectory = $env:LOCALAPPDATA
@@ -106,6 +113,6 @@ Start-Process -FilePath $wslPath -ArgumentList "--import $DistributionName $dist
 Start-Process -FilePath $wslPath -ArgumentList "--set-version $DistributionName 2" -NoNewWindow -Wait 
 #optional commands
 Start-Process -FilePath $wslPath -ArgumentList "-d $DistributionName apk add bash" -NoNewWindow -Wait
-Start-Process -FilePath $wslPath -ArgumentList "-d $DistributionName ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf" -NoNewWindow -Wait
+Start-Process -FilePath $wslPath -ArgumentList "-d $DistributionName pip3 install ffmpeg-normalize" -NoNewWindow -Wait
 
 
