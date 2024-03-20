@@ -52,7 +52,7 @@ param (
     [string]$LinuxDistro,
     [string]$WSLDistributionName,
     [switch]$RunExtras,
-    [switch]$AsciiColors,
+    [string]$AsciiColors,
     [string]$neofetchtext,
     [array]$ExtraCommands
 )
@@ -116,15 +116,15 @@ function Set-WSL2ExtraItems {
 
 #don't touch below unless you know what you are doing
 function Invoke-RequirementChecks {
-    if (!Test-Path $gzip) {
+    if (-not (Test-Path $gzip)) {
         Write-Host "gzip.exe path does not exist, exiting ..."
         Exit
     }
-    if (!Test-Path $tar) {
+    if (-not (Test-Path $tar)) {
         Write-Host "tar.exe path does not exist, exiting ..."
         Exit
     }
-    if (!Test-Path $curl) {
+    if (-not (Test-Path $curl)) {
         Write-Host "curl.exe path does not exist, exiting ..."
         Exit
     }
