@@ -30,16 +30,16 @@
 	.EXAMPLE
 		[array]$myExtras = ("-d tom42-OCRmyPDF apk add bash","-d tom42-OCRmyPDF ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
 		Set-Template.ps1 -gzip "c:\tools\cygwin\bin\gzip.exe" `
-						 -tar "c:\tools\cygwin\bin\tar.exe" `
-						 -curl "C:\Windows\System32\curl.exe" `
-						 -distro "OCRmyPDF" `
-						 -dockerpath "jbarlow83/ocrmypdf-alpine" `
-						 -LinuxDistro "alpine" `
-						 -WSLDistributionName "tom42-OCRmyPDF" `
-						 -RunExtras `
-						 -AsciiColors "6 8 1 15 3 4" `
-						 -neofetchtext "C:\Path\Prompt.Ascii" `
-						 -ExtraCommands $myExtras
+				 -tar "c:\tools\cygwin\bin\tar.exe" `
+				 -curl "C:\Windows\System32\curl.exe" `
+				 -distro "OCRmyPDF" `
+				 -dockerpath "jbarlow83/ocrmypdf-alpine" `
+				 -LinuxDistro "alpine" `
+				 -WSLDistributionName "tom42-OCRmyPDF" `
+				 -RunExtras `
+				 -AsciiColors "6 8 1 15 3 4" `
+				 -neofetchtext "C:\Path\Prompt.Ascii" `
+				 -ExtraCommands $myExtras
 #>
 [CmdletBinding()]
 param (
