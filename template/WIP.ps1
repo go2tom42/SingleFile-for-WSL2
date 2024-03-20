@@ -1,4 +1,46 @@
-#temp
+<#
+	.SYNOPSIS
+		This creates and installs a WSL2 container from a Docker source
+	.DESCRIPTION
+		This creates and installs a WSL2 container from a Docker source
+	.PARAMETER gzip
+        [string] Full Path to gzip.exe
+	.PARAMETER tar
+        [string] Full Path to tar.exe
+	.PARAMETER curl
+        [string] Full Path to curl.exe
+	.PARAMETER distro
+        [string] Temporary name for Docker container
+	.PARAMETER dockerpath
+        [string] Docker Image path, EXAMPLE "jbarlow83/ocrmypdf-alpine" 
+	.PARAMETER LinuxDistro
+        [string] Type of image we are working with, ONLY "alpine" & "debian" currently supported
+	.PARAMETER WSLDistributionName
+        [string] Name used to idenify WSL2 container
+	.PARAMETER RunExtras
+        [switch] For extra install commands, anding -RunExtras means YES
+	.PARAMETER AsciiColors
+        [string] 6 colors used for neofetch, 0-255 seperated with a space EXAMPLE "6 8 1 15 3 4"
+	.PARAMETER neofetchtext
+        [string] Full Path of ascii text file for Prompt logo
+	.PARAMETER ExtraCommands
+        [array] Send this via varible unless you know another way EXAMPLE
+        [array]$myExtras = ("-d tom42-wsldistro apk add bash","-d tom42-wsldistro ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
+        -ExtraCommands $myExtras
+	.EXAMPLE
+        [array]$myExtras = ("-d tom42-OCRmyPDF apk add bash","-d tom42-OCRmyPDF ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
+		Set-Template.ps1 -gzip "c:\tools\cygwin\bin\gzip.exe" `
+                         -tar "c:\tools\cygwin\bin\tar.exe" `
+                         -curl "C:\Windows\System32\curl.exe" `
+                         -distro "OCRmyPDF" `
+                         -dockerpath "jbarlow83/ocrmypdf-alpine" `
+                         -LinuxDistro "alpine" `
+                         -WSLDistributionName "tom42-OCRmyPDF" `
+                         -RunExtras `
+                         -AsciiColors "6 8 1 15 3 4" `
+                         -neofetchtext "C:\Path\Prompt.Ascii" `
+                         -ExtraCommands $myExtras
+#>
 [CmdletBinding()]
 param (
     [string]$gzip,
@@ -17,22 +59,22 @@ param (
 
 
 function Set-SystemVaribles {
-    if (!$gzip) {[string]$Script:gzip                   = 'c:\tools\cygwin\bin\gzip.exe'}
-    if (!$tar)  {[string]$Script:tar                    = 'c:\tools\cygwin\bin\tar.exe'}
-    if (!$curl) {[string]$Script:curl                   = 'C:\Windows\System32\curl.exe' }
+    if (!$gzip)                {[string]$Script:gzip                   = 'c:\tools\cygwin\bin\gzip.exe'}
+    if (!$tar)                 {[string]$Script:tar                    = 'c:\tools\cygwin\bin\tar.exe'}
+    if (!$curl)                {[string]$Script:curl                   = 'C:\Windows\System32\curl.exe' }
 };Set-SystemVaribles
 
 function Set-Docker {
-    if (!$distro)     {[string]$Script:distro                 = "OCRmyPDF"}
-    if (!$dockerpath) {[string]$Script:dockerpath             = "jbarlow83/ocrmypdf-alpine"}
+    if (!$distro)              {[string]$Script:distro                 = "OCRmyPDF"}
+    if (!$dockerpath)          {[string]$Script:dockerpath             = "jbarlow83/ocrmypdf-alpine"}
 };Set-Docker
 
 function Set-WSL2Items {
-    if (!$LinuxDistro) {[string]$Script:LinuxDistro                    = "alpine"}
+    if (!$LinuxDistro)         {[string]$Script:LinuxDistro            = "alpine"}
     if (!$WSLDistributionName) {[string]$Script:WSLDistributionName    = "tom42-OCRmyPDF"}
-    if (!$RunExtras) {[switch]$Script:RunExtras                        = $true}
-    if (!$AsciiColors) {[string]$Script:AsciiColors                    = "6 8 1 15 3 4"}
-    if (!$neofetchtext) {[string]$Script:neofetchtext                  = @'
+    if (!$RunExtras)           {[switch]$Script:RunExtras              = $true}
+    if (!$AsciiColors)         {[string]$Script:AsciiColors            = "6 8 1 15 3 4"}
+    if (!$neofetchtext)        {[string]$Script:neofetchtext           = @'
                                                      ${c4}@@@@@@@@@@@@@@@@@@@@      
                                                      ${c4}@                  @@@    
                                                      ${c4}@                  @@@@   
@@ -73,7 +115,7 @@ function Set-WSL2ExtraItems {
 }
 
 #don't touch below unless you know what you are doing
-function Invoke-RequirmentChecks {
+function Invoke-RequirementChecks {
     if (!Test-Path $gzip) {
         Write-Host "gzip.exe path does not exist, exiting ..."
         Exit
@@ -89,10 +131,10 @@ function Invoke-RequirmentChecks {
     if (get-command docker) {
         Write-Host ""
     } else {
-        Write-Host "Docker not install or running, exiting ..."
+        Write-Host "Docker not install and/or running, exiting ..."
         Exit
     }
-}
+};Invoke-RequirementChecks
 
 
 
