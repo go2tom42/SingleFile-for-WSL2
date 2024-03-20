@@ -4,42 +4,42 @@
 	.DESCRIPTION
 		This creates and installs a WSL2 container from a Docker source
 	.PARAMETER gzip
-        [string] Full Path to gzip.exe
+		[string] Full Path to gzip.exe
 	.PARAMETER tar
-        [string] Full Path to tar.exe
+		[string] Full Path to tar.exe
 	.PARAMETER curl
-        [string] Full Path to curl.exe
+		[string] Full Path to curl.exe
 	.PARAMETER distro
-        [string] Temporary name for Docker container
+		[string] Temporary name for Docker container
 	.PARAMETER dockerpath
-        [string] Docker Image path, EXAMPLE "jbarlow83/ocrmypdf-alpine" 
+		[string] Docker Image path, EXAMPLE "jbarlow83/ocrmypdf-alpine" 
 	.PARAMETER LinuxDistro
-        [string] Type of image we are working with, ONLY "alpine" & "debian" currently supported
+		[string] Type of image we are working with, ONLY "alpine" & "debian" currently supported
 	.PARAMETER WSLDistributionName
-        [string] Name used to idenify WSL2 container
+		[string] Name used to idenify WSL2 container
 	.PARAMETER RunExtras
-        [switch] For extra install commands, anding -RunExtras means YES
+		[switch] For extra install commands, anding -RunExtras means YES
 	.PARAMETER AsciiColors
-        [string] 6 colors used for neofetch, 0-255 seperated with a space EXAMPLE "6 8 1 15 3 4"
+		[string] 6 colors used for neofetch, 0-255 seperated with a space EXAMPLE "6 8 1 15 3 4"
 	.PARAMETER neofetchtext
-        [string] Full Path of ascii text file for Prompt logo
+		[string] Full Path of ascii text file for Prompt logo
 	.PARAMETER ExtraCommands
-        [array] Send this via varible unless you know another way EXAMPLE
-        [array]$myExtras = ("-d tom42-wsldistro apk add bash","-d tom42-wsldistro ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
-        -ExtraCommands $myExtras
+		[array] Send this via varible unless you know another way EXAMPLE
+		[array]$myExtras = ("-d tom42-wsldistro apk add bash","-d tom42-wsldistro ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
+		-ExtraCommands $myExtras
 	.EXAMPLE
-        [array]$myExtras = ("-d tom42-OCRmyPDF apk add bash","-d tom42-OCRmyPDF ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
+		[array]$myExtras = ("-d tom42-OCRmyPDF apk add bash","-d tom42-OCRmyPDF ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
 		Set-Template.ps1 -gzip "c:\tools\cygwin\bin\gzip.exe" `
-                         -tar "c:\tools\cygwin\bin\tar.exe" `
-                         -curl "C:\Windows\System32\curl.exe" `
-                         -distro "OCRmyPDF" `
-                         -dockerpath "jbarlow83/ocrmypdf-alpine" `
-                         -LinuxDistro "alpine" `
-                         -WSLDistributionName "tom42-OCRmyPDF" `
-                         -RunExtras `
-                         -AsciiColors "6 8 1 15 3 4" `
-                         -neofetchtext "C:\Path\Prompt.Ascii" `
-                         -ExtraCommands $myExtras
+						 -tar "c:\tools\cygwin\bin\tar.exe" `
+						 -curl "C:\Windows\System32\curl.exe" `
+						 -distro "OCRmyPDF" `
+						 -dockerpath "jbarlow83/ocrmypdf-alpine" `
+						 -LinuxDistro "alpine" `
+						 -WSLDistributionName "tom42-OCRmyPDF" `
+						 -RunExtras `
+						 -AsciiColors "6 8 1 15 3 4" `
+						 -neofetchtext "C:\Path\Prompt.Ascii" `
+						 -ExtraCommands $myExtras
 #>
 [CmdletBinding()]
 param (
