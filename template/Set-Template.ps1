@@ -95,16 +95,19 @@ ${c1} @@@@@@@    @@@@@@ @@    @@   ${c2}@   @@  @@   @@   ${c3}@@  @@@@@@       
                                                      ${c4}@                        @
                                                      ${c4}@@@@@@@@@@@@@@@@@@@@@@@@@@
 '@
-} else {
-    if (Test-Path $neofetchtext) {
-        $neofetchtext = Get-Content -Raw $neofetchtext
-    } else {
-        Write-Host "neofetchtext file path does not exit, exiting"
-        Exit
+    }    else {
+        $uri = $neofetchtext -as [System.URI]
+        if ($null -ne $uri.AbsoluteURI -and $uri.Scheme -match '[File|file]') {
+            if (Test-Path $neofetchtext) {
+                $neofetchtext = Get-Content -Raw $neofetchtext
+            }
+            else {
+                Write-Host "neofetchtext file path does not exit, exiting"
+                Exit
+            }
+        }
     }
-}
-
-};Set-WSL2Items
+}; Set-WSL2Items
 
 
 #you can add as many as you want, follow template
