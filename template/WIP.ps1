@@ -30,8 +30,8 @@
 	.EXAMPLE
 		[array]$myExtras = ("-d tom42-OCRmyPDF apk add bash","-d tom42-OCRmyPDF ln -s /app/.venv/bin/ocrmypdf /usr/local/bin/ocrmypdf")
 		Set-Template.ps1 -gzip "c:\tools\cygwin\bin\gzip.exe" `
-				    -tar "c:\tools\cygwin\bin\tar.exe" `
-				         -curl "C:\Windows\System32\curl.exe" `
+				 -tar "c:\tools\cygwin\bin\tar.exe" `
+				 -curl "C:\Windows\System32\curl.exe" `
 				 -distro "OCRmyPDF" `
 				 -dockerpath "jbarlow83/ocrmypdf-alpine" `
 				 -LinuxDistro "alpine" `
