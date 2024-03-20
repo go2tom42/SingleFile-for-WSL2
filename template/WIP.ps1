@@ -1,3 +1,4 @@
+#temp
 [CmdletBinding()]
 param (
     [string]$gzip,
@@ -51,13 +52,16 @@ ${c1} @@@@@@@    @@@@@@ @@    @@   ${c2}@   @@  @@   @@   ${c3}@@  @@@@@@       
                                                      ${c4}@                        @
                                                      ${c4}@                        @
                                                      ${c4}@@@@@@@@@@@@@@@@@@@@@@@@@@
-'@} else {
+'@
+} else {
     if (Test-Path $neofetchtext) {
         $neofetchtext = Get-Content -Raw $neofetchtext
     } else {
         Write-Host "neofetchtext file path does not exit, exiting"
         Exit
     }
+}
+
 };Set-WSL2Items
 
 
